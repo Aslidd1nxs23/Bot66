@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Rezyume ma'lumotlari</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #ffffff);
+    --secbg: var(--tg-theme-secondary-bg-color, #f0f2f5);
+    --text: var(--tg-theme-text-color, #1c1c1e);
+    --hint: var(--tg-theme-hint-color, #8e8e93);
+    --link: var(--tg-theme-link-color, #2481cc);
+    --btn: var(--tg-theme-button-color, #2481cc);
+    --btn-text: var(--tg-theme-button-text-color, #ffffff);
+    --line: rgba(120,120,128,0.22);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+  }
+  .wrap { padding: 12px 16px 120px; }
+  h1 {
+    font-size: 20px; font-weight: 700; text-align: center;
+    margin: 8px 0 18px; letter-spacing: 0.2px;
+  }
+  .card {
+    background: var(--secbg);
+    border-radius: 14px;
+    padding: 14px 14px 4px;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.4px; color: var(--hint); margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .field { margin-bottom: 10px; }
+  label {
+    display: block; font-size: 13px; color: var(--hint);
+    margin-bottom: 4px; font-weight: 500;
+  }
+  label .req { color: #ff453a; }
+  input[type=text], input[type=tel], input[type=email], input[type=date], select {
+    width: 100%; padding: 10px 12px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--bg); color: var(--text);
+    font-size: 15px; outline: none; appearance: none;
+  }
+  input:focus, select:focus { border-color: var(--link); }
+  .hint { font-size: 12px; color: var(--hint); margin-top: 3px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .repeat-item {
+    background: var(--bg); border-radius: 10px; padding: 10px;
+    margin-bottom: 10px; position: relative; border: 1px solid var(--line);
+  }
+  .repeat-item .remove {
+    position: absolute; top: 8px; right: 8px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--secbg); color: var(--hint);
+    border: none; font-size: 14px; line-height: 24px; text-align: center;
+    cursor: pointer; padding: 0;
+  }
+  .add-btn {
+    width: 100%; padding: 11px; border-radius: 10px;
+    border: 1.5px dashed var(--link); background: transparent; color: var(--link);
+    font-size: 14px; font-weight: 600; cursor: pointer; margin: 4px 0 10px;
+  }
+  .add-btn:active { opacity: 0.6; }
+
+  .section-note {
+    font-size: 12px; color: var(--hint); margin-bottom: 10px; line-height: 1.4;
+  }
+
+  ::placeholder { color: var(--hint); opacity: 0.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📝 Rezyume ma'lumotlari</h1>
+
+  <!-- Shaxsiy ma'lumotlar -->
+  <div class="card">
+    <div class="card-title">Shaxsiy ma'lumotlar</div>
+    <div class="field">
+      <label>To'liq ism-familiya-sharifingiz <span class="req">*</span></label>
+      <input type="text" id="full_name" placeholder="Aliyev Vali Botirovich" required>
+    </div>
+    <div class="field">
+      <label>Telefon raqamingiz <span class="req">*</span></label>
+      <input type="tel" id="phone" placeholder="+998901234567" required>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Tug'ilgan sana</label>
+        <input type="date" id="birth_date">
+      </div>
+      <div class="field">
+        <label>Millati</label>
+        <input type="text" id="nationality" placeholder="o'zbek">
+      </div>
+    </div>
+    <div class="field">
+      <label>Tug'ilgan joyi</label>
+      <input type="text" id="birth_place" placeholder="Toshkent viloyati, ...">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="ism@example.com">
+    </div>
+  </div>
+
+  <!-- Ta'lim -->
+  <div class="card">
+    <div class="card-title">Ta'lim</div>
+    <div class="field">
+      <label>Ma'lumoti darajasi</label>
+      <select id="education_level">
+        <option value="">— tanlang —</option>
+        <option>Oliy</option>
+        <option>O'rta maxsus</option>
+        <option>Umumiy o'rta</option>
+        <option>Magistr</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Tamomlagan (muassasa, yil)</label>
+      <input type="text" id="education_institution" placeholder="2019-yil, TATU">
+    </div>
+    <div class="field">
+      <label>Mutaxassisligi</label>
+      <input type="text" id="specialty" placeholder="Dasturiy injiniring">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Ilmiy darajasi</label>
+        <input type="text" id="academic_degree" placeholder="yo'q">
+      </div>
+      <div class="field">
+        <label>Ilmiy unvoni</label>
+        <input type="text" id="academic_title" placeholder="yo'q">
+      </div>
+    </div>
+    <div class="field">
+      <label>Chet tillarini bilish</label>
+      <input type="text" id="languages" placeholder="ingliz, rus">
+    </div>
+  </div>
+
+  <!-- Ta'lim tarixi (dinamik) -->
+  <div class="card">
+    <div class="card-title">
+      <span>Ta'lim tarixi (bosqichlar)</span>
+    </div>
+    <div class="section-note">Har bir o'quv bosqichini alohida qo'shing (maktab, kollej, universitet va h.k.)</div>
+    <div id="edu-list"></div>
+    <button type="button" class="add-btn" onclick="addEdu()">+ Ta'lim bosqichini qo'shish</button>
+  </div>
+
+  <!-- Yaqin qarindoshlar (dinamik) -->
+  <div class="card">
+    <div class="card-title">Yaqin qarindoshlar</div>
+    <div class="section-note">Otasi / onasi / turmush o'rtog'i / farzandi / aka-uka / opa-singil va h.k.</div>
+    <div id="fam-list"></div>
+    <button type="button" class="add-btn" onclick="addFam()">+ Qarindosh qo'shish</button>
+  </div>
+
+  <!-- Tillar bilish jadvali (zamonaviy rezyume uchun) -->
+  <div class="card">
+    <div class="card-title">Tillarni bilish darajasi</div>
+    <div class="section-note">"Zamonaviy rezyume" shabloni uchun (ixtiyoriy)</div>
+    <div id="lang-list"></div>
+    <button type="button" class="add-btn" onclick="addLang()">+ Til qo'shish</button>
+  </div>
+
+  <!-- Kompyuter dasturlari (zamonaviy rezyume uchun) -->
+  <div class="card">
+    <div class="card-title">Kompyuter dasturlari</div>
+    <div class="section-note">"Zamonaviy rezyume" shabloni uchun (ixtiyoriy)</div>
+    <div id="comp-list"></div>
+    <button type="button" class="add-btn" onclick="addComp()">+ Dastur qo'shish</button>
+  </div>
+
+  <!-- Qo'shimcha ma'lumotlar -->
+  <div class="card">
+    <div class="card-title">Qo'shimcha ma'lumotlar</div>
+    <div class="row2">
+      <div class="field">
+        <label>Harbiy unvoni</label>
+        <input type="text" id="military_title" placeholder="yo'q">
+      </div>
+      <div class="field">
+        <label>Partiyaviyligi</label>
+        <input type="text" id="party" placeholder="yo'q">
+      </div>
+    </div>
+    <div class="field">
+      <label>Davlat mukofotlari</label>
+      <input type="text" id="awards" placeholder="yo'q">
+    </div>
+    <div class="field">
+      <label>Deputatlik / saylanadigan lavozim</label>
+      <input type="text" id="deputy_status" placeholder="yo'q">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Fuqaroligi</label>
+        <input type="text" id="citizenship" placeholder="O'zbekiston">
+      </div>
+      <div class="field">
+        <label>Oilaviy holati</label>
+        <input type="text" id="marital_status" placeholder="uylanmagan">
+      </div>
+    </div>
+    <div class="field">
+      <label>Passport ma'lumotlari</label>
+      <input type="text" id="passport" placeholder="AB1234567">
+    </div>
+    <div class="field">
+      <label>Kurs / trening / malaka oshirish</label>
+      <input type="text" id="trainings" placeholder="yo'q">
+    </div>
+  </div>
+
+  <div class="section-note" style="text-align:center; padding: 6px 0 20px;">
+    Formani to'ldirib bo'lgach, pastdagi <b>«Tayyor»</b> tugmasini bosing.
+    Rasm (3x4) so'rovi keyingi qadamda chatda so'raladi.
+  </div>
+</div>
+
+<template id="tpl-edu">
+  <div class="repeat-item" data-kind="edu">
+    <button type="button" class="remove" onclick="this.parentElement.remove()">✕</button>
+    <div class="field"><label>Davri</label><input type="text" class="f-period" placeholder="2019-2023"></div>
+    <div class="field"><label>Muassasa nomi</label><input type="text" class="f-institution" placeholder="TATU"></div>
+    <div class="row2">
+      <div class="field"><label>Yo'nalish</label><input type="text" class="f-specialty" placeholder="IT"></div>
+      <div class="field"><label>Diplom №</label><input type="text" class="f-diploma" placeholder="B№123456"></div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-fam">
+  <div class="repeat-item" data-kind="fam">
+    <button type="button" class="remove" onclick="this.parentElement.remove()">✕</button>
+    <div class="field">
+      <label>Qarindoshligi</label>
+      <select class="f-relation">
+        <option>Otasi</option><option>Onasi</option><option>Turmush o'rtog'i</option>
+        <option>Farzandi</option><option>Aka-ukasi</option><option>Opa-singlisi</option>
+        <option>Qaynotasi</option><option>Qaynonasi</option><option>Boshqa</option>
+      </select>
+    </div>
+    <div class="field"><label>F.I.Sh.</label><input type="text" class="f-full_name" placeholder="Aliyev Botir"></div>
+    <div class="row2">
+      <div class="field"><label>Tug'ilgan yili</label><input type="text" class="f-birth" placeholder="1975"></div>
+      <div class="field"><label>Telefon</label><input type="text" class="f-phone" placeholder="+998..."></div>
+    </div>
+    <div class="field"><label>Ish joyi, lavozimi</label><input type="text" class="f-workplace" placeholder="Nafaqada"></div>
+    <div class="field"><label>Turar joyi</label><input type="text" class="f-address" placeholder="Toshkent sh."></div>
+  </div>
+</template>
+
+<template id="tpl-lang">
+  <div class="repeat-item" data-kind="lang">
+    <button type="button" class="remove" onclick="this.parentElement.remove()">✕</button>
+    <div class="row2">
+      <div class="field"><label>Til</label><input type="text" class="f-language" placeholder="Ingliz tili"></div>
+      <div class="field">
+        <label>Daraja</label>
+        <select class="f-level">
+          <option>Qoniqarli</option><option>Yaxshi</option><option>A'lo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-comp">
+  <div class="repeat-item" data-kind="comp">
+    <button type="button" class="remove" onclick="this.parentElement.remove()">✕</button>
+    <div class="row2">
+      <div class="field"><label>Dastur</label><input type="text" class="f-program" placeholder="MS Office"></div>
+      <div class="field">
+        <label>Daraja</label>
+        <select class="f-level">
+          <option>Foydalanuvchi</option><option>Tajribali foydalanuvchi</option><option>Dasturchi</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+function addRow(templateId, listId) {
+  const tpl = document.getElementById(templateId);
+  const clone = tpl.content.cloneNode(true);
+  document.getElementById(listId).appendChild(clone);
+}
+function addEdu()  { addRow('tpl-edu', 'edu-list'); }
+function addFam()  { addRow('tpl-fam', 'fam-list'); }
+function addLang() { addRow('tpl-lang', 'lang-list'); }
+function addComp() { addRow('tpl-comp', 'comp-list'); }
+
+// Boshida bittadan bo'sh qator qo'yamiz, tahrirlash qulay bo'lishi uchun
+addEdu(); addFam();
+
+function fmtDate(iso) {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  return `${d}.${m}.${y}`;
+}
+
+function collectRepeat(listId, fieldMap) {
+  const items = document.querySelectorAll(`#${listId} .repeat-item`);
+  const out = [];
+  items.forEach(item => {
+    const obj = {};
+    let hasValue = false;
+    for (const [outKey, cls] of Object.entries(fieldMap)) {
+      const el = item.querySelector('.' + cls);
+      const v = el ? el.value.trim() : "";
+      obj[outKey] = v;
+      if (v) hasValue = true;
+    }
+    if (hasValue) out.push(obj);
+  });
+  return out;
+}
+
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+tg.MainButton.setText("✅ Tayyor");
+tg.MainButton.show();
+tg.MainButton.onClick(function() {
+  const full_name = val('full_name');
+  const phone = val('phone');
+  if (!full_name) {
+    tg.showAlert("Iltimos, to'liq ism-familiya-sharifingizni kiriting.");
+    return;
+  }
+  if (!phone) {
+    tg.showAlert("Iltimos, telefon raqamingizni kiriting.");
+    return;
+  }
+
+  const payload = {
+    full_name: full_name,
+    phone: phone,
+    birth_date: fmtDate(val('birth_date')),
+    birth_place: val('birth_place'),
+    nationality: val('nationality'),
+    email: val('email'),
+    education_level: val('education_level'),
+    education_institution: val('education_institution'),
+    specialty: val('specialty'),
+    academic_degree: val('academic_degree'),
+    academic_title: val('academic_title'),
+    languages: val('languages'),
+    military_title: val('military_title'),
+    party: val('party'),
+    awards: val('awards'),
+    deputy_status: val('deputy_status'),
+    citizenship: val('citizenship'),
+    marital_status: val('marital_status'),
+    passport: val('passport'),
+    trainings: val('trainings'),
+    education_history: collectRepeat('edu-list', {
+      period: 'f-period', institution: 'f-institution',
+      specialty: 'f-specialty', diploma: 'f-diploma'
+    }),
+    family: collectRepeat('fam-list', {
+      relation: 'f-relation', full_name: 'f-full_name', birth: 'f-birth',
+      workplace: 'f-workplace', address: 'f-address', phone: 'f-phone'
+    }),
+    languages_table: collectRepeat('lang-list', {
+      language: 'f-language', level: 'f-level'
+    }),
+    computer_skills: collectRepeat('comp-list', {
+      program: 'f-program', level: 'f-level'
+    }),
+  };
+
+  tg.sendData(JSON.stringify(payload));
+});
+</script>
+</body>
+</html>
